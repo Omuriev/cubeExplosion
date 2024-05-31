@@ -15,8 +15,6 @@ public class ClickHandler : MonoBehaviour
     private float _maxSeparationChance = 100f;
     private float _chanceReductionValue = 2f;
 
-    public event Action Clicked;
-
     private void Start()
     {
         _currentSeparationChance = _maxSeparationChance;

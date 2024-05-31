@@ -40,5 +40,4 @@ public class Cube : MonoBehaviour
     }
 
     private int GetNumberOfCubes() => Random.Range(_minRandomCubes, _maxRandomCubes);
-    
 }
