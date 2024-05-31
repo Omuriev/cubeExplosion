@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Cube : MonoBehaviour
 {
     [SerializeField] private CubeGenerator _generator;
@@ -10,6 +11,11 @@ public class Cube : MonoBehaviour
 
     private int _minRandomCubes = 2;
     private int _maxRandomCubes = 6;
+    private Rigidbody _rigidbody;
+
+    public Rigidbody CubeRigidbody => _rigidbody;
+
+    private void Awake() => _rigidbody = GetComponent<Rigidbody>();
 
     public void DevideCube()
     {
@@ -29,10 +35,10 @@ public class Cube : MonoBehaviour
     {
         for (int i = 0; i < cubes.Count; i++)
         {
-            if (cubes[i].gameObject.TryGetComponent(out Rigidbody rigidbody))
-                rigidbody.AddExplosionForce(explosionForce, transform.position, explosionRadius);
+            cubes[i].CubeRigidbody.AddExplosionForce(explosionForce, transform.position, explosionRadius);
         }
     }
 
     private int GetNumberOfCubes() => Random.Range(_minRandomCubes, _maxRandomCubes);
+    
 }

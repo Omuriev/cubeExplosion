@@ -121,8 +121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _generator: {fileID: 1956289591902079527}
-  explosionRadius: 20
-  explosionForce: 20
+  explosionRadius: 100
+  explosionForce: 100
 --- !u!54 &1392442651950853045
 Rigidbody:
   m_ObjectHideFlags: 0
