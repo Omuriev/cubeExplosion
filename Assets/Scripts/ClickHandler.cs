@@ -33,7 +33,7 @@ public class ClickHandler : MonoBehaviour
                     if (TrySeparateCube() == true)
                         cube.DevideCube();
                     else
-                        Destroy(cube.gameObject);
+                        cube.Explode();
 
                     _currentSeparationChance /= _chanceReductionValue;
                 }
