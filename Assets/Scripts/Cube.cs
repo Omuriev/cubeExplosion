@@ -8,7 +8,10 @@ public class Cube : MonoBehaviour
     [SerializeField] private CubeGenerator _generator;
     [SerializeField] private float _explosionRadius = 50f;
     [SerializeField] private float _explosionForce = 50f;
+    [SerializeField] private float _separationChance;
 
+    private float _maxSeparationChance = 100f;
+    private float _chanceReductionValue = 2f;
     private int _minRandomCubes = 2;
     private int _maxRandomCubes = 6;
     private Rigidbody _rigidbody;
@@ -17,38 +20,30 @@ public class Cube : MonoBehaviour
 
     private void Awake() => _rigidbody = GetComponent<Rigidbody>();
 
-    public void DevideCube()
+    public void Initialize(float force, float radius, float separationChance)
     {
-        List<Cube> cubes = new List<Cube>();
-
-        for (int i = 0; i < GetNumberOfCubes(); i++)
-        {
-            cubes.Add(_generator.Generate(transform.localScale, _explosionForce, _explosionRadius));
-        }
-
-        Explode(cubes);
-
-        Destroy(gameObject);
-    }
-
-    public void Explode()
-    {
-        foreach (Rigidbody explodableObject in GetExplodableObjects())
-            AddExplosionForce(explodableObject);
-
-        Destroy(gameObject);
-    }
-
-    public void SetExplosionForce(float force)
-    { 
         if (force > _explosionForce)
             _explosionForce = force;
-    }
 
-    public void SetExplosionRadius(float radius)
-    {
         if (radius > _explosionRadius)
             _explosionRadius = radius;
+
+        _separationChance = separationChance;
+    }
+
+    public void Destroy()
+    {
+        if (TrySeparateCube() == true)
+        {
+            _separationChance /= _chanceReductionValue;
+            Divide();
+        }
+        else
+        {
+            Explode();
+        }
+
+        Destroy(gameObject);
     }
 
     private List<Rigidbody> GetExplodableObjects()
@@ -66,6 +61,12 @@ public class Cube : MonoBehaviour
         return rigidbodies;
     }
 
+    private void Explode()
+    {
+        foreach (Rigidbody explodableObject in GetExplodableObjects())
+            AddExplosionForce(explodableObject);
+    }
+
     private void Explode(List<Cube> cubes)
     {
         for (int i = 0; i < cubes.Count; i++)
@@ -79,5 +80,19 @@ public class Cube : MonoBehaviour
         rigidbody.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
     }
 
+    private void Divide()
+    {
+        List<Cube> cubes = new List<Cube>();
+
+        for (int i = 0; i < GetNumberOfCubes(); i++)
+        {
+            cubes.Add(_generator.Generate(transform.localScale, _explosionForce, _explosionRadius, _separationChance));
+        }
+
+        Explode(cubes);
+    }
+
     private int GetNumberOfCubes() => Random.Range(_minRandomCubes, _maxRandomCubes);
+
+    private bool TrySeparateCube() => UnityEngine.Random.Range(0, _maxSeparationChance) <= _separationChance;
 }

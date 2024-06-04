@@ -121,8 +121,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _generator: {fileID: 1956289591902079527}
-  explosionRadius: 100
-  explosionForce: 100
+  _explosionRadius: 50
+  _explosionForce: 50
+  _separationChance: 100
 --- !u!54 &1392442651950853045
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -171,3 +172,5 @@ MonoBehaviour:
   - {r: 0.8679245, g: 0.7128279, b: 0.06959773, a: 0}
   _prefab: {fileID: 8170759473468697556}
   _scaleReductionValue: 2
+  _explosionForceMultiplier: 2
+  _explosionRadiusMultiplier: 2
