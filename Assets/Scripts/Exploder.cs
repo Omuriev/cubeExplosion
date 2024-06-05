@@ -14,7 +14,6 @@ public class Exploder : MonoBehaviour
 
     private void AddExplosionForce(Rigidbody rigidbody, float explosionForce, float explosionRadius)
     {
-
         rigidbody.AddExplosionForce(explosionForce, transform.position, explosionRadius);
     }
 }
