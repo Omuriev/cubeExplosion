@@ -1,12 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Cube : MonoBehaviour
 {
-    [SerializeField] private CubeGenerator _generator;
-    [SerializeField] private Exploder _exploder;
     [SerializeField] private float _explosionRadius = 50f;
     [SerializeField] private float _explosionForce = 50f;
     [SerializeField] private float _separationChance;
@@ -16,14 +13,29 @@ public class Cube : MonoBehaviour
     private int _minRandomCubes = 2;
     private int _maxRandomCubes = 6;
     private Rigidbody _rigidbody;
+    private Exploder _exploder;
+    private CubeGenerator _generator;
 
     public Rigidbody CubeRigidbody => _rigidbody;
     public float ExplosionRadius => _explosionRadius;
     public float ExplosionForce => _explosionForce;
 
-    private void Awake() => _rigidbody = GetComponent<Rigidbody>();
+    private void Start()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
 
-    public void Initialize(float force, float radius, float separationChance)
+        if (_exploder == null)
+        {
+            _exploder = FindObjectOfType<Exploder>();
+        }
+
+        if (_generator == null)
+        {
+            _generator = FindObjectOfType<CubeGenerator>();
+        }
+    }
+
+    public void Initialize(float force, float radius, float separationChance, Exploder exploder, CubeGenerator generator)
     {
         if (force > _explosionForce)
             _explosionForce = force;
@@ -32,18 +44,20 @@ public class Cube : MonoBehaviour
             _explosionRadius = radius;
 
         _separationChance = separationChance;
+        _exploder = exploder;
+        _generator = generator;
     }
 
     public void Destroy()
     {
-        if (CanSeparateCube() == true)
+        if (CanSeparateCube())
         {
             _separationChance /= _chanceReductionValue;
             Divide();
         }
         else
         {
-            _exploder.Explode(GetExplodableObjects());
+            _exploder.Explode(GetExplodableObjects(), transform.position);
         }
 
         Destroy(gameObject);
@@ -72,10 +86,10 @@ public class Cube : MonoBehaviour
 
         for (int i = 0; i < numberOfCubes; i++)
         {
-            cubes.Add(_generator.Generate(transform.localScale, _explosionForce, _explosionRadius, _separationChance));
+            cubes.Add(_generator.Generate(transform.localScale, _explosionForce, _explosionRadius, _separationChance, _exploder, transform.position));
         }
 
-        _exploder.Explode(cubes);
+        _exploder.Explode(cubes, transform.position);
     }
 
     private int GetNumberOfCubes() => Random.Range(_minRandomCubes, _maxRandomCubes);

@@ -14,8 +14,6 @@ GameObject:
   - component: {fileID: 1533652245007673343}
   - component: {fileID: 8170759473468697556}
   - component: {fileID: 1392442651950853045}
-  - component: {fileID: 1956289591902079527}
-  - component: {fileID: 3961552306545585949}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -121,8 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eee51dd2e5e5fa4b91f26bfc9d1f2e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _generator: {fileID: 1956289591902079527}
-  _exploder: {fileID: 3961552306545585949}
   _explosionRadius: 50
   _explosionForce: 50
   _separationChance: 100
@@ -153,38 +149,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &1956289591902079527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2437705965132432821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b899c81f43117fb4abae16c200176cdb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _colors:
-  - {r: 0.49629906, g: 0.9056604, b: 0.12388753, a: 0}
-  - {r: 0.9339623, g: 0.074893214, b: 0.074893214, a: 0}
-  - {r: 0, g: 0.9245283, b: 0.5869851, a: 0}
-  - {r: 0.13794944, g: 0.25256115, b: 0.9433962, a: 0}
-  - {r: 0.8679245, g: 0.23335704, b: 0.7275168, a: 0}
-  - {r: 0.8679245, g: 0.7128279, b: 0.06959773, a: 0}
-  _prefab: {fileID: 8170759473468697556}
-  _scaleReductionValue: 2
-  _explosionForceMultiplier: 2
-  _explosionRadiusMultiplier: 2
---- !u!114 &3961552306545585949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2437705965132432821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: babf6f200b1b2544f99286d2f0b28b57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

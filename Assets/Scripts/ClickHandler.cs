@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ClickHandler : MonoBehaviour
@@ -11,7 +8,6 @@ public class ClickHandler : MonoBehaviour
     [SerializeField] private float _maxDistance = 100f;
 
     private Ray _ray;
-    
 
     private void Update()
     {
